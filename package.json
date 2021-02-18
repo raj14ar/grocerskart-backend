@@ -4,6 +4,7 @@
   "description": "backend for grocerskart.com",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,7 @@
     "mongodb": "^3.6.4",
     "mongoose": "^5.11.17",
     "nodemon": "^2.0.7",
-    "passport": "^0.4.1"
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
   }
 }
