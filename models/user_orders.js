@@ -1,7 +1,6 @@
-const { Decimal128 } = require('mongodb');
 const mongoose = require('mongoose');
 
-const customer_orders_Schema = new mongoose.Schema({
+const userOrdersSchema = new mongoose.Schema({
     order_id: {
         type: String,
         required: true
@@ -20,13 +19,13 @@ const customer_orders_Schema = new mongoose.Schema({
         type: String
     },
     total: {
-        type: Decimal128,
+        type: Number,
         required: true
     }
 },{
     timestamps: true
 });
 
-const Orders = mongoose.model('Orders',customer_orders_Schema);
+const Orders = mongoose.model('Orders',userOrdersSchema);
 
 module.exports = Orders;

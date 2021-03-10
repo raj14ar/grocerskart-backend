@@ -1,14 +1,9 @@
 const mongoose = require('mongoose');
 
-const customersSchema = mongoose.Schema ({
+const usersSchema = mongoose.Schema ({
     
     name:{
-        type: String,
-        required: true
-    },
-    password:{
-        type: String,
-        required: true
+        type: String
     },
     phone: {
         type: Number,
@@ -40,6 +35,6 @@ const customersSchema = mongoose.Schema ({
     timestamps: true
 });
 
-const Customer = mongoose.model('Customer',customersSchema);
+const User = mongoose.model('User',usersSchema);
 
-module.exports = Customer;
+module.exports = User;

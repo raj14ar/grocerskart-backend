@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const customer_addresses_Schema = new mongoose.Schema({
+const userAddressesSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true
@@ -11,7 +11,7 @@ const customer_addresses_Schema = new mongoose.Schema({
     },
     customer:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer'
+        ref: 'User'
     },
     city: {
         type: String,
@@ -32,6 +32,6 @@ const customer_addresses_Schema = new mongoose.Schema({
     timestamps: true
 });
 
-const Address = mongoose.model('Address',customer_addresses_Schema);
+const Address = mongoose.model('Address',userAddressesSchema);
 
 module.exports = Address;
