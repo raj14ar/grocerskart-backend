@@ -8,15 +8,17 @@ const categorySchema = mongoose.Schema ({
             unique: true
         }
     ,
-    product: [
+    products: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'
         }
     ],
-    img: {
-        type: String
-    }
+    img: [
+        {
+            type: String
+        }
+    ]
 },{
     timestamps: true
 });

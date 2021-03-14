@@ -18,6 +18,10 @@ app.use(bodyParser.urlencoded({
 
 app.use('/', require('./routes'));
 
+app.use('*', function(req, res){
+  res.status(404).send('Page Not Found');
+});
+
 app.listen(port, () => {
   console.log(`App is listening at port ${port}`)
 })
