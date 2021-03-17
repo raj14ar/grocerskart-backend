@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const categorySchema = mongoose.Schema ({
+const dailyEssentialsSchema = mongoose.Schema ({
     name:{
             type: String,
             required: true,
@@ -17,11 +17,15 @@ const categorySchema = mongoose.Schema ({
         {
             type: String
         }
-    ]
+    ],
+    maxDiscount: {
+        type: Number,
+        default: 0
+    }
 },{
     timestamps: true
 });
 
-const Category = mongoose.model('Category',categorySchema);
+const Daily_Essentials = mongoose.model('Daily_Essentials',dailyEssentialsSchema);
 
-module.exports = Category;
+module.exports = Daily_Essentials;

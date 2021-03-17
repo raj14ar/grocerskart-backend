@@ -1,15 +1,6 @@
 const mongoose = require('mongoose');
-const multerS3 = require('multer-s3');
-const multer = require('multer');
-const aws = require('aws-sdk');
-let IMAGE_PATH = '';
 const productsSchema = mongoose.Schema ({
     name:{
-        type: String,
-        required: true,
-        unique: true
-    },
-    id:{
         type: String,
         required: true,
         unique: true
@@ -18,6 +9,11 @@ const productsSchema = mongoose.Schema ({
         type: Number,
         required: true
     },
+    size:{
+        type: String,
+        required: true
+    }
+    ,
     price:{
         type: Number,
         required: true
@@ -37,19 +33,28 @@ const productsSchema = mongoose.Schema ({
     ,
     category: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
         required: true
     },
+    daily_essentials: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Daily_Essentials'
+    },
+    variants: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Products'
+        }
+    ],
     description: {
         type: String
     },
     max_purchase_limit: {
         type: Number
     },
-    tag: [
-        {
+    tag: {
             type: String
         }
-    ]
 },{
     timestamps: true
 });

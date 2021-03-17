@@ -26,9 +26,6 @@ const upload = multer({
     s3: s3,
     bucket: 'grocerskart',
     acl: 'public-read',
-    // metadata: function (req, file, cb) {
-    //   cb(null, {fieldName: file.fieldname});
-    // },
     key: function (req, file, cb) {
       const name = file.originalname.replace(/\s/g,'_');
       cb(null, name);
@@ -43,16 +40,12 @@ router.post('/',upload.array('image',5),function(req,res,next){
       req.files.forEach(image => {
         locations.push(image.location);
       });
-      console.log('Image locations are ',locations);
       req.body.img = locations;
-     next();
     }
-    else{
-      return res.status(403).json({message: 'Invalid file type, only JPEG and PNG is allowed!'});
-    }
+    next();
   } catch (error) {
     console.log(error)
-    return res.status(501).json({message: 'Something Wrong'})
+    return res.status(501).json({message: 'Error in uploading image'})
   }
 })
 
