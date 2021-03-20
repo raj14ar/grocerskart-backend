@@ -8,7 +8,8 @@ const topDeals = mongoose.Schema ({
             required: true
         }
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 const Top_Deals = mongoose.model('Top_Deals',topDeals);

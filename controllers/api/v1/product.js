@@ -1,10 +1,9 @@
 const Product = require('../../../models/products');
 const Category = require('../../../models/categories');
-const mongoose = require('mongoose');
 const Daily_Essentials = require('../../../models/daily_essentials');
 
 
-module.exports.getAll = async function(req, res){
+module.exports.getProducts = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
@@ -12,10 +11,9 @@ module.exports.getAll = async function(req, res){
             '__v': false
         }
         const product = await Product.find({},filterItem);
-        console.log(product)
         return res.status(200).json({
             message: "List of Product",
-            Product: product
+            data: product
         })
     }
     catch(error){
@@ -26,7 +24,7 @@ module.exports.getAll = async function(req, res){
     }
 }
 
-module.exports.create = async function(req, res){
+module.exports.createProducts = async function(req, res){
     try{
         const category = await Category.findById(req.body.category);
         const daily_essentials = await Daily_Essentials.findById(req.body.daily_essentials);

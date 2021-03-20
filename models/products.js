@@ -5,7 +5,7 @@ const productsSchema = mongoose.Schema ({
         required: true,
         unique: true
     },
-    market_price:{
+    mrp:{
         type: Number,
         required: true
     },
@@ -36,7 +36,7 @@ const productsSchema = mongoose.Schema ({
         ref: 'Category',
         required: true
     },
-    daily_essentials: {
+    dailyEssentials: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Daily_Essentials'
     },
@@ -49,14 +49,15 @@ const productsSchema = mongoose.Schema ({
     description: {
         type: String
     },
-    max_purchase_limit: {
+    maxPurchaseLimit: {
         type: Number
     },
     tag: {
             type: String
         }
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 const Product = mongoose.model('Product',productsSchema);

@@ -16,7 +16,7 @@ module.exports.sendOtp = function(req, res){
         sendOtp.send(phoneNumber, "GRCSKRT", OTP,function (error, data) {
             if(error){
                 console.log('Error in sending OTP',err);
-                return res.json(500, {
+                return res.status(500).json({
                 message: 'Error in sending OTP'
                 });
             }
@@ -31,7 +31,7 @@ module.exports.verify = function(req,res){
     sendOtp.verify(phoneNumber, req.body.otp ,function (error, data) {
         if(error){
             console.log('Error in verifying OTP',error);
-            return res.json(500, {
+            return res.status(500).json({
                 message: 'Error in verifying OTP'
             });
         }
@@ -43,26 +43,32 @@ module.exports.verify = function(req,res){
                     });
                 }
                 if (!user){
-                    User.create(req.body, function(err, newUser){
+                    const referralCode = randomstring.generate({
+                        length: 6,
+                        charset: 'alphanumeric',
+                        capitalization: 'uppercase'
+                    })
+                    User.create({phone: req.body.phone, referralCode: referralCode}, function(err, newUser){
                         if(err){
                             return res.status(500).json({
                                 message: `Error in creating user ${err}`
                             });
                         }
-                        
+                        const tokenInfo = (({ id,referralCode }) => ({ id,referralCode }))(newUser);
                         return res.status(200).json({
                             message: 'User created successfully, here is your token',
                             data:  {
-                                token: jwt.sign(newUser.toJSON(), 'rambharose', {expiresIn:  '365d'})
+                                token: jwt.sign(tokenInfo, 'rambharose', {expiresIn:  '365d'})
                             }
                         })
                     })
                 }
                 else{
+                    const tokenInfo = (({ id,referralCode }) => ({ id,referralCode }))(user);
                     return res.status(200).json({
-                        message: 'User created successfully, here is your token',
+                        message: 'User logged in successfully, here is your token',
                         data:  {
-                            token: jwt.sign(user.toJSON(), 'rambharose', {expiresIn:  '365d'})
+                            token: jwt.sign(tokenInfo, 'rambharose', {expiresIn:  '365d'})
                         }
                     })
                 }

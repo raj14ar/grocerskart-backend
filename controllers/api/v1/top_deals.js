@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Top_Deals = require('../../../models/top_deals');
 const Product = require('../../../models/products');
 
-module.exports.getAll = async function(req, res){
+module.exports.getTopDeals = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
@@ -25,10 +25,10 @@ module.exports.getAll = async function(req, res){
     }
 }
 
-module.exports.create = async function(req, res){
+module.exports.createTopDeals = async function(req, res){
     try{
-        const product = await Product.findOne({name: req.body.name});
-        const data = Top_Deals.create({products:mongoose.Types.ObjectId(product._id)});
+        const product = await Product.findOne({name: req.body.id});
+        const data = Top_Deals.create({products:mongoose.Types.ObjectId(product.id)});
         return res.status(200).json({
             message: 'Product added Sucessfully to deals'
         })

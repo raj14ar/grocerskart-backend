@@ -10,6 +10,9 @@ const usersSchema = mongoose.Schema ({
         required: true,
         unique: true
     },
+    email: {
+        type: String
+    },
     addresses: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -28,11 +31,29 @@ const usersSchema = mongoose.Schema ({
     gender: {
         type: String
     },
-    avatar: {
+    referred: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+    }],
+    referredBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cart'
+    },
+    referralCode: {
         type: String
+    },
+    wishlist: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Wishlist'
     }
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 const User = mongoose.model('User',usersSchema);

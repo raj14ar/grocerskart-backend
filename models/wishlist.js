@@ -2,13 +2,6 @@ const mongoose = require('mongoose');
 
 const wishlistSchema = mongoose.Schema ({
 
-    name:
-    {
-        type: String,
-        unique: true,
-        default: 'My Wishlist'
-
-    },
     user:
     {
         type: mongoose.Schema.Types.ObjectId,
@@ -16,14 +9,15 @@ const wishlistSchema = mongoose.Schema ({
 
     }
     ,
-    product: [
+    products: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'
         }
     ]
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 const Wishlist = mongoose.model('Wishlist',wishlistSchema);

@@ -1,7 +1,7 @@
 const Category = require('../../../models/categories');
 
 
-module.exports.getAll = async function(req, res){
+module.exports.getCategory = async function(req, res){
     try{
         const filterItem = {
             'product': false,
@@ -44,7 +44,7 @@ module.exports.getProducts = async function(req, res){
     }
 }
 
-module.exports.create = async function(req, res){
+module.exports.createCategory = async function(req, res){
     try{
         req.body.img=req.body.img[0];
         Category.create(req.body, function(err, data){

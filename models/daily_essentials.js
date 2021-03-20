@@ -23,7 +23,8 @@ const dailyEssentialsSchema = mongoose.Schema ({
         default: 0
     }
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 const Daily_Essentials = mongoose.model('Daily_Essentials',dailyEssentialsSchema);

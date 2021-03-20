@@ -1,7 +1,7 @@
 const Daily_Essentials = require('../../../models/daily_essentials');
 
 
-module.exports.getAll = async function(req, res){
+module.exports.getDailyEssentials = async function(req, res){
     try{
         const filterItem = {
             'product': false,
@@ -43,7 +43,7 @@ module.exports.getProducts = async function(req, res){
     }
 }
 
-module.exports.create = async function(req, res){
+module.exports.createDailyEssentials = async function(req, res){
     try{
         req.body.img=req.body.img[0];
         Daily_Essentials.create(req.body, function(err, data){

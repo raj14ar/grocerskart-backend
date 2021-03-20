@@ -29,7 +29,8 @@ const userAddressesSchema = new mongoose.Schema({
         type: String
     }
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 const Address = mongoose.model('Address',userAddressesSchema);

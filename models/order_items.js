@@ -14,7 +14,8 @@ const order_items_Schema = new mongoose.Schema({
         ref: 'Orders'
     }
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
 
 const Order_items = mongoose.model('Order_items',order_items_Schema);
