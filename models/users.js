@@ -13,20 +13,13 @@ const usersSchema = mongoose.Schema ({
     email: {
         type: String
     },
-    addresses: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Address'
-        }
-    ],
-    orders: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Orders'
-        }
-    ],
-    email: {
-        type: String
+    addresses: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address'
+    },
+    orders: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Orders'
     },
     gender: {
         type: String
@@ -50,6 +43,10 @@ const usersSchema = mongoose.Schema ({
     wishlist: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Wishlist'
+    },
+    isSupremeLeader: {
+        type: Boolean,
+        default: false
     }
 },{
     timestamps: true,

@@ -1,5 +1,5 @@
 const Daily_Essentials = require('../../../models/daily_essentials');
-
+const User = require('../../../models/users');
 
 module.exports.getDailyEssentials = async function(req, res){
     try{
@@ -9,7 +9,7 @@ module.exports.getDailyEssentials = async function(req, res){
             'updatedAt': false,
             '__v': false
         }
-        const daily_essentials = await Daily_Essentials.find({},filterItem).populate().exec();
+        const daily_essentials = await Daily_Essentials.find({},filterItem).populate('products').exec();
         return res.status(200).json({
             message: "Daily Essentials List",
             data: daily_essentials
@@ -29,10 +29,9 @@ module.exports.getProducts = async function(req, res){
             'updatedAt': false,
             '__v': false
         }
-        const daily_essentials = await Daily_Essentials.findById(req.body.id,filterItem).populate('products',filterItem).exec();
+        const products = await Daily_Essentials.findById(req.body.id,filterItem).populate('products',filterItem).exec();
         return res.status(200).json({
-            message: "List of Products",
-            data: daily_essentials
+            data: products
         })
     }
     catch(error){
@@ -46,16 +45,10 @@ module.exports.getProducts = async function(req, res){
 module.exports.createDailyEssentials = async function(req, res){
     try{
         req.body.img=req.body.img[0];
-        Daily_Essentials.create(req.body, function(err, data){
-            if(err){
-                return res.status(500).json({
-                    message: 'Error in creating Daily Essentials'
-                });
-            }
-            return res.status(200).json({
-                message: 'Daily Essentials added Sucessfully'
-            })
-    });
+        const daily_essentials = await Daily_Essentials.create(req.body);
+        return res.status(200).json({
+            message: 'Daily Essentials added Sucessfully'
+        })
     }
     catch(error){
         console.log('Error in creating Daily Essentials',error);

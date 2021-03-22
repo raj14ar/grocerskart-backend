@@ -30,10 +30,9 @@ module.exports.getProducts = async function(req, res){
             'updatedAt': false,
             '__v': false
         }
-        const data = await Category.findById(req.body.id,filterItem).populate('products',filterItem).exec();
+        const products = await Category.findById(req.body.id,filterItem).populate('products',filterItem).exec();
         return res.status(200).json({
-            message: "List of Products",
-            data: data
+            data: products
         })
     }
     catch(error){
@@ -47,16 +46,10 @@ module.exports.getProducts = async function(req, res){
 module.exports.createCategory = async function(req, res){
     try{
         req.body.img=req.body.img[0];
-        Category.create(req.body, function(err, data){
-            if(err){
-                return res.status(500).json({
-                    message: 'Error in creating category'
-                });
-            }
-            return res.status(200).json({
-                message: 'Catogery added Sucessfully'
-            })
-    });
+        const category = await Category.create(req.body);
+        return res.status(200).json({
+            message: 'Catogery added Sucessfully'
+        })
     }
     catch(error){
         console.log('Error in creating category',error);

@@ -10,7 +10,6 @@ module.exports.search = async function(req, res){
         let $regex = escapeStringRegexp(req.body.search_term);
         const result = await Product.find({ tag : { $regex , $options: 'i'}},filterItem).populate().exec();
         return res.status(200).json({
-            message: "Search results are",
             data: result
         })
     }

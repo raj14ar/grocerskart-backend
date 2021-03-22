@@ -1,6 +1,7 @@
 const Product = require('../../../models/products');
 const Category = require('../../../models/categories');
 const Daily_Essentials = require('../../../models/daily_essentials');
+const User = require('../../../models/users');
 
 
 module.exports.getProducts = async function(req, res){
@@ -12,7 +13,6 @@ module.exports.getProducts = async function(req, res){
         }
         const product = await Product.find({},filterItem);
         return res.status(200).json({
-            message: "List of Product",
             data: product
         })
     }

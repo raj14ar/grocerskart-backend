@@ -3,6 +3,30 @@ const multer = require('multer');
 const aws = require('aws-sdk');
 const express = require('express');
 const router = express.Router();
+const User = require('../models/users');
+
+
+router.post('/',function(req, res, next){
+  User.findById(req.user.id,function(err,user){
+    if(err){
+      return res.status(500).json({
+        message: 'Error in finding user'
+      })
+    }
+    if(user.isSupremeLeader){
+      next();
+    }
+    else{
+      console.log('Value of supreme leader',user.isSupremeLeader)
+      return res.status(401).json({
+          message: 'Unauthorized'
+      })
+    }
+  })
+})
+
+
+
 
 const s3 = new aws.S3({
   accessKeyId: 'AKIAQIZF5O6IRJ5DY3UL',
@@ -35,13 +59,23 @@ const upload = multer({
 
 router.post('/',upload.array('image',5),function(req,res,next){
   try {
-    if(req.files){
-      let locations = []
-      req.files.forEach(image => {
-        locations.push(image.location);
-      });
-      req.body.img = locations;
-    }
+    // if(req.user){
+    //   const user = User.findById(req.user.id);
+    //   if(user.isSupremeLeader){
+        if(req.files){
+          let locations = []
+          req.files.forEach(image => {
+            locations.push(image.location);
+          });
+          req.body.img = locations;
+        }
+      // }
+      // else{
+      //   return res.status(401).json({
+      //       message: 'Unauthorized'
+      //   })
+      // }
+    // }
     next();
   } catch (error) {
     console.log(error)

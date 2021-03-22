@@ -58,9 +58,9 @@ module.exports.createCart = async function(req, res){
 
 module.exports.removeCart = async function(req, res){
     try{
-        const cart = await Cart.findOne({user: req.user.id}).populate('products').exec();
+        const cart = await Cart.findOne({user: req.user.id}).populate('products');
         for( let i = 0; i < cart.products.length; i++){
-            if ( cart.products[i] === req.body.id) { 
+            if ( cart.products[i]._id == req.body.id) { 
                 cart.products.splice(i, 1); 
                 i--; 
             }

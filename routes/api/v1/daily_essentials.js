@@ -3,11 +3,12 @@ const express = require('express');
 
 const router = express.Router();
 const daily_essentials = require('../../../controllers/api/v1/daily_essentials');
+const passport = require('passport');
 
 router.get('/', daily_essentials.getDailyEssentials);
 router.post('/products', daily_essentials.getProducts);
-router.post('/', require('../../../config/middleware'))
-router.post('/', daily_essentials.createDailyEssentials);
+router.post('/',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'))
+router.post('/',passport.authenticate('jwt', {session: false}), daily_essentials.createDailyEssentials);
 router.use('*', function(req, res){
     res.status(404).json({
         message: 'Page Not Found'

@@ -10,7 +10,6 @@ module.exports.getWishlist = async function(req, res){
         }
         const wishlist = await Wishlist.findOne({user: req.user.id},filterItem).populate('products',filterItem);
         return res.status(200).json({
-            message: "Products of wishlist",
             data: wishlist
         })
     }
@@ -61,13 +60,12 @@ module.exports.removeWishlist = async function(req, res){
     try{
         const wishlist = await Wishlist.findOne({user: req.user.id}).populate('products');
         for( let i = 0; i < wishlist.products.length; i++){
-            if ( wishlist.products[i] === req.body.id) { 
+            if ( wishlist.products[i]._id == req.body.id) {
                 wishlist.products.splice(i, 1); 
                 i--; 
             }
         }
         wishlist.save();
-        console.log(wishlist)
         return res.status(200).json({
             message: 'Product sucessfully deleted from wishlist'
         })

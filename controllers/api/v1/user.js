@@ -8,11 +8,12 @@ module.exports.getUser = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false
+            'updatedAt': false,
+            'isSupremeLeader': false
+
         }
         const user = await User.findById(req.user.id,filterItem);
         return res.status(200).json({
-            message: "Details of user",
             data: user
         })
     }

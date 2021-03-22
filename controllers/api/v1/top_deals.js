@@ -12,7 +12,6 @@ module.exports.getTopDeals = async function(req, res){
         const products = await Top_Deals.find({},filterItem).populate('products',filterItem).exec();
         const maxDiscount = Math.max(...products.map(items => items.products.discount), 0);
         return res.status(200).json({
-            message: "List of top deals",
             data: products,
             maxDiscount: maxDiscount
         })
@@ -27,8 +26,7 @@ module.exports.getTopDeals = async function(req, res){
 
 module.exports.createTopDeals = async function(req, res){
     try{
-        const product = await Product.findOne({name: req.body.id});
-        const data = Top_Deals.create({products:mongoose.Types.ObjectId(product.id)});
+        const data = await Top_Deals.create({products:mongoose.Types.ObjectId(product.id)});
         return res.status(200).json({
             message: 'Product added Sucessfully to deals'
         })

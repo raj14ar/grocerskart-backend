@@ -56,7 +56,7 @@ module.exports.verify = function(req,res){
                         }
                         const tokenInfo = (({ id,referralCode }) => ({ id,referralCode }))(newUser);
                         return res.status(200).json({
-                            message: 'User created successfully, here is your token',
+                            message: 'User created successfully',
                             data:  {
                                 token: jwt.sign(tokenInfo, 'rambharose', {expiresIn:  '365d'})
                             }
@@ -66,7 +66,7 @@ module.exports.verify = function(req,res){
                 else{
                     const tokenInfo = (({ id,referralCode }) => ({ id,referralCode }))(user);
                     return res.status(200).json({
-                        message: 'User logged in successfully, here is your token',
+                        message: 'User logged in successfully',
                         data:  {
                             token: jwt.sign(tokenInfo, 'rambharose', {expiresIn:  '365d'})
                         }

@@ -2,11 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 const categoryApi = require('../../../controllers/api/v1/categories');
+const passport = require('passport');
 
 router.get('/', categoryApi.getCategory);
 router.post('/products', categoryApi.getProducts);
-router.post('/', require('../../../config/middleware'))
-router.post('/', categoryApi.createCategory);
+router.post('/',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'))
+router.post('/',passport.authenticate('jwt', {session: false}), categoryApi.createCategory);
 router.use('*', function(req, res){
     res.status(404).json({
         message: 'Page Not Found'
