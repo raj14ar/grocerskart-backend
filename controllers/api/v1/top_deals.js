@@ -6,8 +6,7 @@ module.exports.getTopDeals = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false,
-            '__v': false
+            'updatedAt': false
         }
         const products = await Top_Deals.find({},filterItem).populate('products',filterItem).exec();
         const maxDiscount = Math.max(...products.map(items => items.products.discount), 0);

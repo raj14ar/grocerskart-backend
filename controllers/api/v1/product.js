@@ -8,8 +8,7 @@ module.exports.getProducts = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false,
-            '__v': false
+            'updatedAt': false
         }
         const product = await Product.find({},filterItem);
         return res.status(200).json({

@@ -4,8 +4,7 @@ module.exports.search = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false,
-            '__v': false
+            'updatedAt': false
         }
         let $regex = escapeStringRegexp(req.body.search_term);
         const result = await Product.find({ tag : { $regex , $options: 'i'}},filterItem).populate().exec();

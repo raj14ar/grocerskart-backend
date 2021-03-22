@@ -5,11 +5,15 @@ const userAddressesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    content: {
+    streetAddress: {
         type: String,
         required: true
     },
-    customer:{
+    phone: {
+        type: Number,
+        required: true
+    },
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },

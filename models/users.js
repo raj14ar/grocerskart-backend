@@ -13,14 +13,14 @@ const usersSchema = mongoose.Schema ({
     email: {
         type: String
     },
-    addresses: {
+    addresses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Address'
-    },
-    orders: {
+    }],
+    orders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Orders'
-    },
+    }],
     gender: {
         type: String
     },
