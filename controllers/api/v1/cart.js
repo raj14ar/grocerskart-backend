@@ -28,13 +28,14 @@ module.exports.createCart = async function(req, res){
             const exists = cart.products.includes(req.body.id);
             if(!exists){
                 cart.products.push(mongoose.Types.ObjectId(req.body.id));
-                cart.save();
             }
             else{
                 return res.status(409).json({
                     message: 'Product already exists in cart'
                 })
             }
+            cart.quantity.push(req.body.quantity);
+            cart.save();
         }
         else{
             const cart = await Cart.create({user: req.user.id});
@@ -42,6 +43,7 @@ module.exports.createCart = async function(req, res){
             user.cart = cart;
             user.save();
             cart.products.push(mongoose.Types.ObjectId(req.body.id));
+            cart.quantity.push(req.body.quantity);
             cart.save();
         }
         return res.status(200).json({
@@ -61,6 +63,7 @@ module.exports.removeCart = async function(req, res){
         const cart = await Cart.findOne({user: req.user.id}).populate('products');
         for( let i = 0; i < cart.products.length; i++){
             if ( cart.products[i]._id == req.body.id) { 
+                cart.quantity.splice(i,1);
                 cart.products.splice(i, 1); 
                 i--; 
             }
