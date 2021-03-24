@@ -11,8 +11,8 @@ module.exports.getCart = async function(req, res){
             'user': false
         }
 
-        const cart = await Cart.find({user: req.user.id},filterItem).populate('products')
-        .exec(Product.populate(Cart._id, {path: 'products'}));
+        const cart = await Cart.find({user: req.user.id},filterItem).populate('products._id')
+        // .exec(Product.populate(Cart._id, {path: 'products'}));
         // const product = await Product.find({})
         console.log(cart);
         // cart.products.forEach(element =>  {

