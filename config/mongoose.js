@@ -4,7 +4,8 @@ mongoose.connect('mongodb://localhost/grocerskart_devlopment', {useNewUrlParser:
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 const db = mongoose.connection;
-
+const AutoIncrementFactory = require('mongoose-sequence');
+const AutoIncrement = AutoIncrementFactory(connection);
 db.on('error', console.error.bind(console,"Error connecting to Database"));
 
 db.once('open',function(){

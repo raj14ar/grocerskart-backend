@@ -32,7 +32,7 @@ module.exports.createProducts = async function(req, res){
                 message: "Category name don't exists"
                 });
         }
-        req.body.discount = Math.floor(((req.body.market_price - req.body.price)*100)/req.body.market_price);
+        req.body.discount = Math.floor(((req.body.mrp - req.body.price)*100)/req.body.mrp);
         const product = await Product.create(req.body);
         if(product){
             category.products.push(product);

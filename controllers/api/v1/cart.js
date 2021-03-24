@@ -7,19 +7,16 @@ module.exports.getCart = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false,
-            'user': false
+            'updatedAt': false
         }
 
-        const cart = await Cart.find({user: req.user.id},filterItem).populate('products._id')
-        // .exec(Product.populate(Cart._id, {path: 'products'}));
-        // const product = await Product.find({})
-        console.log(cart);
-        // cart.products.forEach(element =>  {
-        //     element.price= element._id.price;
-        //     element._id=element._id._id
-        //     console.log(element);
-        // });
+        const cart = await Cart.findOne({user: req.user.id},filterItem).populate('products._id');
+        if(cart){
+            cart.products.forEach(element =>  {
+                element.price= element._id.price;
+                element._id=element._id._id
+            });
+        }
         return res.status(200).json({
             data: cart
         })
@@ -41,19 +38,26 @@ module.exports.createCart = async function(req, res){
             let alreadyAvailable = false;
             cart.products.forEach(element => {
             if(element._id==req.body.id){
+                if(req.body.quantity!=element.quantity && req.body.quantity>0){
+                    element.quantity=req.body.quantity;
+                    cart.save();
+                    return res.status(200).json({
+                        message: 'Cart Sucessfully updated'
+                    })
+                }
                 alreadyAvailable=true;
                 }
             });
-            console.log(alreadyAvailable)
             if(!alreadyAvailable && product){
-                let item = [{
+                let item = {
                     name : product.name,
                     _id : mongoose.Types.ObjectId(product.id),
                     price : product.price,
-                    quantity : 1
-                }];
+                    quantity : 1,
+                    img: product.img
+                };
                 if(req.body.quantity){
-                    item[0].quantity=req.body.quantity;
+                    item.quantity=req.body.quantity;
                 }
                 cart.products.push(item);
                 cart.save();
@@ -66,14 +70,15 @@ module.exports.createCart = async function(req, res){
 
         }
         else{
-            let item = [{
+            let item = {
                 name : product.name,
                 _id : mongoose.Types.ObjectId(product.id),
                 price : product.price,
-                quantity : 1
-            }];
+                quantity : 1,
+                img: product.img
+            };
             if(req.body.quantity){
-                item[0].quantity=req.body.quantity;
+                item.quantity=req.body.quantity;
             }
 
             const newCart = await Cart.create({
@@ -97,18 +102,21 @@ module.exports.createCart = async function(req, res){
 
 module.exports.removeCart = async function(req, res){
     try{
-        const cart = await Cart.findById(req.body.id);
+        const cart = await Cart.findOne({user: req.user.id});
         if(cart){
-            cart.remove();
-        }
-        const user = await User.findById(req.user.id).populate('cart');
-        for( let i = 0; i < user.cart.length; i++){
-            if ( user.cart[i].product == req.body.id) { 
-                user.cart.splice(i, 1); 
-                i--; 
+            if(cart.products.length==0){
+                return res.status(409).json({
+                    message: 'No products to remove'
+                })
             }
+            for( let i = 0; i < cart.products.length; i++){
+                if ( cart.products[i]._id == req.body.id) { 
+                    cart.products.splice(i, 1); 
+                    i--; 
+                }
+            }
+            cart.save();
         }
-        user.save();
         return res.status(200).json({
             message: 'Product sucessfully deleted from cart'
         })

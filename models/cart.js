@@ -20,7 +20,12 @@ const cartSchema = mongoose.Schema ({
             ref: 'Product'
         },
         quantity: Number,
-        price: Number
+        price: Number,
+        img: [
+            {
+                type: String
+            }
+        ]
       }]
 },{
     timestamps: true,

@@ -23,8 +23,13 @@ const userOrdersSchema = new mongoose.Schema({
     product: [{
         name: String,
         _id: mongoose.Types.ObjectId,
-        quantity: Number
-      }]
+        quantity: Number,
+        price: Number
+      }],
+    total: {
+        type: Number,
+        required: true
+    }
 
 },{
     timestamps: true,
