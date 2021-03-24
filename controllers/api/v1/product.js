@@ -8,9 +8,30 @@ module.exports.getProducts = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false
+            'updatedAt': false,
+            'variants': false,
+            'tag': false
         }
         const product = await Product.find({},filterItem);
+        return res.status(200).json({
+            data: product
+        })
+    }
+    catch(error){
+        console.log('Error in fetching product',error);
+        return res.status(500).json({
+        message: 'Error in fetching product'
+        });
+    }
+}
+module.exports.getProductDetails = async function(req, res){
+    try{
+        const filterItem = {
+            'createdAt': false,
+            'updatedAt': false,
+            'tag': false
+        }
+        const product = await Product.findById(req.body.id,filterItem);
         return res.status(200).json({
             data: product
         })
@@ -54,6 +75,20 @@ module.exports.createProducts = async function(req, res){
         console.log('Error in adding product',error);
         return res.status(500).json({
         message: 'Error in adding product'
+        });
+    }
+}
+module.exports.removeProduct = async function(req, res){
+    try{
+        const product = await Product.findOneAndDelete(req.body.id);
+        return res.status(200).json({
+            message: 'Product Sucessfully deleted'
+        })
+    }
+    catch(error){
+        console.log('Error in fetching product',error);
+        return res.status(500).json({
+        message: 'Error in fetching product'
         });
     }
 }

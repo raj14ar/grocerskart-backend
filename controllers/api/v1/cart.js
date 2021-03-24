@@ -7,7 +7,8 @@ module.exports.getCart = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false
+            'updatedAt': false,
+            'user': false
         }
 
         const cart = await Cart.findOne({user: req.user.id},filterItem).populate('products._id');
@@ -38,13 +39,6 @@ module.exports.createCart = async function(req, res){
             let alreadyAvailable = false;
             cart.products.forEach(element => {
             if(element._id==req.body.id){
-                if(req.body.quantity!=element.quantity && req.body.quantity>0){
-                    element.quantity=req.body.quantity;
-                    cart.save();
-                    return res.status(200).json({
-                        message: 'Cart Sucessfully updated'
-                    })
-                }
                 alreadyAvailable=true;
                 }
             });
@@ -56,7 +50,7 @@ module.exports.createCart = async function(req, res){
                     quantity : 1,
                     img: product.img
                 };
-                if(req.body.quantity){
+                if(req.body.quantity && req.body.quantity>0){
                     item.quantity=req.body.quantity;
                 }
                 cart.products.push(item);
@@ -125,6 +119,33 @@ module.exports.removeCart = async function(req, res){
         console.log('Error in deleting product from cart',error);
         return res.status(500).json({
         message: 'Error in deleting product from cart'
+        });
+    }
+}
+module.exports.updateCart = async function(req, res){
+    try{
+        const cart = await Cart.findOne({user: req.user.id});
+        if(cart){
+            if(cart.products.length==0){
+                return res.status(409).json({
+                    message: 'No products to modify'
+                })
+            }
+            for( let i = 0; i < cart.products.length; i++){
+                if ( cart.products[i]._id == req.body.id && req.body.quantity>0) { 
+                    cart.products[i].quantity= req.body.quantity;
+                }
+            }
+            cart.save();
+        }
+        return res.status(200).json({
+            message: 'Cart sucessfully updated'
+        })
+    }
+    catch(error){
+        console.log('Error in updating product from cart',error);
+        return res.status(500).json({
+        message: 'Error in updating product from cart'
         });
     }
 }

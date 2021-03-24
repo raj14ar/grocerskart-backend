@@ -6,7 +6,9 @@ module.exports.getWishlist = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false
+            'updatedAt': false,
+            'tag': false,
+            'user': false
         }
         const wishlist = await Wishlist.findOne({user: req.user.id},filterItem).populate('products',filterItem);
         return res.status(200).json({

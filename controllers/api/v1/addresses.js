@@ -25,6 +25,7 @@ module.exports.addAddress = async function(req, res){
     try{
         const user = await User.findById(req.user.id);
         if(user.addresses.length<20){
+            req.body.user=req.user.id;
             const data = await Address.create(req.body);
             user.addresses.push(data);
             user.save();

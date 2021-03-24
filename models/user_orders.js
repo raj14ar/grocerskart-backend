@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const AutoIncrementFactory = require('mongoose-sequence');
-const AutoIncrement = AutoIncrementFactory(mongoose.connection);
 const userOrdersSchema = new mongoose.Schema({
     orderId: {
-        type: Number,
-        required: true
+        type: String,
+        required: true,
+        default: 0
     },
     address:{
-        type: String,
-        rquired: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address'
     },
     paymentMethod:{
         type: String,
@@ -21,11 +21,16 @@ const userOrdersSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    product: [{
+    products: [{
         name: String,
         _id: mongoose.Types.ObjectId,
         quantity: Number,
-        price: Number
+        price: Number,
+        img: [
+            {
+                type: String
+            }
+        ]
       }],
     total: {
         type: Number,
@@ -36,7 +41,6 @@ const userOrdersSchema = new mongoose.Schema({
     timestamps: true,
     versionKey: false
 });
-userOrdersSchema.plugin(AutoIncrement, {inc_field: 'orderId'});
 const Orders = mongoose.model('Orders',userOrdersSchema);
 
 module.exports = Orders;

@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors(corsOptions));
+app.use(cors());
 
 // use express router
 

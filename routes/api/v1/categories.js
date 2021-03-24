@@ -8,6 +8,8 @@ router.get('/', categoryApi.getCategory);
 router.post('/products', categoryApi.getProducts);
 router.post('/',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'))
 router.post('/',passport.authenticate('jwt', {session: false}), categoryApi.createCategory);
+router.delete('/',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'))
+router.delete('/',passport.authenticate('jwt', {session: false}), categoryApi.removeCategory);
 router.use('*', function(req, res){
     res.status(404).json({
         message: 'Page Not Found'

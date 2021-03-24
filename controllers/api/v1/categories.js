@@ -4,14 +4,13 @@ const Category = require('../../../models/categories');
 module.exports.getCategory = async function(req, res){
     try{
         const filterItem = {
-            'product': false,
+            'products': false,
             'createdAt': false,
             'updatedAt': false,
             '__v': false
         }
-        const category = await Category.find({},filterItem).populate().exec();
+        const category = await Category.find({},filterItem);
         return res.status(200).json({
-            message: "List of Catogeries",
             data: category
         })
     }
@@ -54,6 +53,20 @@ module.exports.createCategory = async function(req, res){
         console.log('Error in creating category',error);
         return res.status(500).json({
         message: 'Error in creating category'
+        });
+    }
+}
+module.exports.removeCategory = async function(req, res){
+    try{
+        const category = await Category.findByIdAndDelete(req.body.id);
+        return res.status(200).json({
+            message: 'Catogery deleted Sucessfully'
+        })
+    }
+    catch(error){
+        console.log('Error in deleting category',error);
+        return res.status(500).json({
+        message: 'Error in deleting category'
         });
     }
 }
