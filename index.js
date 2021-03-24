@@ -5,13 +5,15 @@ const db = require('./config/mongoose');
 const passport = require('passport');
 const passportJWT = require('./config/passport-jwt-strategy');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const corsOptions = require('./config/cors');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cors(corsOptions));
 
 // use express router
 

@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-
+const AutoIncrementFactory = require('mongoose-sequence');
+const AutoIncrement = AutoIncrementFactory(mongoose.connection);
 const userOrdersSchema = new mongoose.Schema({
-    order_id: {
-        type: String,
+    orderId: {
+        type: Number,
         required: true
     },
     address:{
@@ -35,7 +36,7 @@ const userOrdersSchema = new mongoose.Schema({
     timestamps: true,
     versionKey: false
 });
-
+userOrdersSchema.plugin(AutoIncrement, {inc_field: 'orderId'});
 const Orders = mongoose.model('Orders',userOrdersSchema);
 
 module.exports = Orders;
