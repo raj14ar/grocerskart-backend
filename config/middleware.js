@@ -84,7 +84,7 @@ const upload = multer({
     bucket: 'grocerskart',
     acl: 'public-read',
     key: function (req, file, cb) {
-      const name = file.originalname.replace(/\s/g,'_');
+      let name = file.originalname.replace(/\s/g,'_');
       cb(null, name);
     }
   })
