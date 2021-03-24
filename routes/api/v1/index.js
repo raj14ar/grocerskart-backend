@@ -12,6 +12,7 @@ router.use('/search', require('./search'));
 router.use('/user',require('./user'));
 router.use('/cart',require('./cart'));
 router.use('/addresses',require('./addresses'));
+router.use('/orders',require('./user_orders'));
 router.use('*', function(req, res){
     res.status(404).json({
         message: 'Page Not Found'

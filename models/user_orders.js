@@ -5,23 +5,27 @@ const userOrdersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    items: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Order_items'
-        }
-    ],
     address:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Address'
+        type: String,
+        rquired: true
+    },
+    paymentMethod:{
+        type: String,
+        required: true
     },
     status: {
         type: String
     },
-    total: {
-        type: Number,
-        required: true
-    }
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    product: [{
+        name: String,
+        _id: mongoose.Types.ObjectId,
+        quantity: Number
+      }]
+
 },{
     timestamps: true,
     versionKey: false
