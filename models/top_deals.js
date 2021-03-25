@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
 const topDeals = mongoose.Schema ({
-    products: 
+    product: 
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
-            required: true
+            ref: 'Product'
         }
 },{
     timestamps: true,

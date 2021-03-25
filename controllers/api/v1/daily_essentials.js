@@ -4,14 +4,13 @@ const User = require('../../../models/users');
 module.exports.getDailyEssentials = async function(req, res){
     try{
         const filterItem = {
-            'product': false,
+            'products': false,
             'createdAt': false,
             'updatedAt': false,
             '__v': false
         }
-        const daily_essentials = await Daily_Essentials.find({},filterItem).populate('products').exec();
+        const daily_essentials = await Daily_Essentials.find({},filterItem).populate('products',filterItem).exec();
         return res.status(200).json({
-            message: "Daily Essentials List",
             data: daily_essentials
         })
     }
@@ -53,6 +52,20 @@ module.exports.createDailyEssentials = async function(req, res){
         console.log('Error in creating Daily Essentials',error);
         return res.status(500).json({
         message: 'Error in creating Daily Essentials'
+        });
+    }
+}
+module.exports.removeDailyEssentials = async function(req, res){
+    try{
+        const daily_essentials = await Daily_Essentials.findByIdAndDelete(req.body.id);
+        return res.status(200).json({
+            message: 'Daily Essentials deleted Sucessfully'
+        })
+    }
+    catch(error){
+        console.log('Error in deleting Daily Essentials',error);
+        return res.status(500).json({
+        message: 'Error in deleting Daily Essentials'
         });
     }
 }

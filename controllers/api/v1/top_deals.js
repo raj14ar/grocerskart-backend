@@ -8,8 +8,8 @@ module.exports.getTopDeals = async function(req, res){
             'createdAt': false,
             'updatedAt': false
         }
-        const products = await Top_Deals.find({},filterItem).populate('products',filterItem).exec();
-        const maxDiscount = Math.max(...products.map(items => items.products.discount), 0);
+        const products = await Top_Deals.find({},filterItem).populate('product',filterItem).exec();
+        const maxDiscount = Math.max(...products.map(items => items.product.discount), 0);
         return res.status(200).json({
             data: products,
             maxDiscount: maxDiscount
@@ -25,15 +25,37 @@ module.exports.getTopDeals = async function(req, res){
 
 module.exports.createTopDeals = async function(req, res){
     try{
-        const data = await Top_Deals.create({products:mongoose.Types.ObjectId(product.id)});
-        return res.status(200).json({
-            message: 'Product added Sucessfully to deals'
-        })
+        const already = await Top_Deals.findOne({product: req.body.productId});
+        if(!already){
+            const data = await Top_Deals.create({product:mongoose.Types.ObjectId(req.body.productId)});
+            return res.status(200).json({
+                message: 'Product added Sucessfully to deals'
+            })
+        }
+        else{
+            return res.status(409).json({
+                message: 'Product already exists in top deals'
+            })
+        }
     }
     catch(error){
         console.log('Error in adding to top deals',error);
         return res.status(500).json({
         message: 'Error in adding to top deals'
+        });
+    }
+}
+module.exports.removeTopDeals = async function(req, res){
+    try{
+        const data = await Top_Deals.findByIdAndDelete(req.body.id);
+        return res.status(200).json({
+            message: 'Product deleted Sucessfully to deals'
+        })
+    }
+    catch(error){
+        console.log('Error in deleting to top deals',error);
+        return res.status(500).json({
+        message: 'Error in deleting to top deals'
         });
     }
 }
