@@ -23,7 +23,7 @@ module.exports.getSlider = async function(req, res){
 module.exports.createSlider = async function(req, res){
     try{
         req.body.img = req.body.img[0];
-        const slider = await Slider.create({img: req.body.img});
+        const slider = await Slider.create({img: req.body.img, category: req.body.category});
         return res.status(200).json({
             message: 'Slider added Sucessfully'
         })

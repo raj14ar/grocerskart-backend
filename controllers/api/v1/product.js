@@ -92,3 +92,17 @@ module.exports.removeProduct = async function(req, res){
         });
     }
 }
+module.exports.updateProduct = async function(req, res){
+    try{
+        const product = await Product.findByIdAndUpdate(req.body.id,req.body);
+        return res.status(200).json({
+            message: 'Product updated Sucessfully'
+        })
+    }
+    catch(error){
+        console.log('Error in updating product',error);
+        return res.status(500).json({
+        message: 'Error in updating product'
+        });
+    }
+}

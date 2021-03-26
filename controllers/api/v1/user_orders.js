@@ -3,6 +3,7 @@ const User = require('../../../models/users');
 const Cart = require('../../../models/cart');
 const mongoose = require('mongoose');
 const Orders = require('../../../models/user_orders');
+const newOrderMailer = require('../../../mailers/new_order_mailer');
 
 module.exports.getAllUserOrder = async function(req, res){
     try{
@@ -67,11 +68,22 @@ module.exports.createOrder = async function(req, res){
             paymentMethod: 'Cash on Delivery',
             orderId: orderId
         });
+        const filterItem = {
+            'createdAt': false,
+            'updatedAt': false
+        }
+        const filterItem2 = {
+            'phone': true,
+            'name' : true
+        }
+        const orderDetails = await newOrder.populate('address',filterItem).populate('user',filterItem2).execPopulate();
+        console.log('Order details',orderDetails)
+        newOrderMailer.newOrder(orderDetails)
         user.orders.push(newOrder);
         user.cart = undefined;
         user.save();
         cart.remove();
-        cart.save();
+
         }
         else{
             return res.status(409).json({
@@ -79,7 +91,7 @@ module.exports.createOrder = async function(req, res){
             })
         }
         return res.status(200).json({
-            message: 'Product Sucessfully added to cart'
+            message: 'Order placed Sucessfully'
         })
     }
     catch(error){

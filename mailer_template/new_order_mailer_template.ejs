@@ -1,0 +1,80 @@
+<div>
+    <table border="1">
+        <tr>
+            <td>
+                <p>Name: </p>
+            </td>
+            <td>
+                <%= order.user.name%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Phone: </p>
+            </td>
+            <td>
+                <%= order.user.phone%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Order ID: </p>
+            </td>
+            <td>
+                <%= order.orderId%>
+            </td>
+        </tr>
+        <% for (let i =0; i < order.products.length;  i++ ) { %>
+            <tr>
+                <td>
+                    <%= i+1 %> .
+                </td>
+                <td>
+                    Name: <%= order.products[i].name %> <br>
+                    Price: <%= order.products[i].price %> <br> 
+                    Qty: <%= order.products[i].quantity %> <br>
+                </td>
+            </tr>
+        <% } %>
+        <tr>
+            <td>
+                <p>Total: </p>
+            </td>
+            <td>
+                <%= order.total%>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                Deliver To
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Name: 
+            </td>
+            <td>
+                <%= order.address.name%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Phone: 
+            </td>
+            <td>
+                <%= order.address.phone%>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Address
+            </td>
+            <td>
+                <%= order.address.streetAddress%>, <%= order.address.landmark%>, <%= order.address.city%>, 
+                <%= order.address.state%>, <%= order.address.pincode%>
+            </td>
+        </tr>
+
+    </table>
+    
+</div>

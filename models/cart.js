@@ -18,7 +18,11 @@ const cartSchema = mongoose.Schema ({
                 type: String
             }
         ]
-      }]
+      }],
+        total: {
+            type: Number,
+            default: 0
+        }
 },{
     timestamps: true,
     versionKey: false

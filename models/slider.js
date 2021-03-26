@@ -5,7 +5,11 @@ const sliderSchema = mongoose.Schema ({
         {
             type: String,
             required: true
-        }
+        },
+    category:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    }
 },{
     timestamps: true,
     versionKey: false

@@ -7,6 +7,8 @@ const passportJWT = require('./config/passport-jwt-strategy');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const corsOptions = require('./config/cors');
+const ejs = require('ejs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -16,6 +18,7 @@ app.use(passport.session());
 app.use(cors());
 
 // use express router
+
 
 app.use('/', require('./routes'));
 

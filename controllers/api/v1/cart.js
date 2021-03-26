@@ -48,11 +48,13 @@ module.exports.createCart = async function(req, res){
                     _id : mongoose.Types.ObjectId(product.id),
                     price : product.price,
                     quantity : 1,
-                    img: product.img
+                    img: product.img,
                 };
                 if(req.body.quantity && req.body.quantity>0){
                     item.quantity=req.body.quantity;
                 }
+                let total = item.quantity*item.price;
+                cart.total = cart.total+total;
                 cart.products.push(item);
                 cart.save();
             }
@@ -74,10 +76,11 @@ module.exports.createCart = async function(req, res){
             if(req.body.quantity){
                 item.quantity=req.body.quantity;
             }
-
+            let total = item.quantity*item.price;
             const newCart = await Cart.create({
                 user: req.user.id,
-                products: item
+                products: item,
+                total: total
             })
             user.cart = newCart;
             user.save();
@@ -105,6 +108,7 @@ module.exports.removeCart = async function(req, res){
             }
             for( let i = 0; i < cart.products.length; i++){
                 if ( cart.products[i]._id == req.body.id) { 
+                    cart.total=(cart.total-(cart.products[i].price*cart.products[i].quantity));
                     cart.products.splice(i, 1); 
                     i--; 
                 }
@@ -133,6 +137,7 @@ module.exports.updateCart = async function(req, res){
             }
             for( let i = 0; i < cart.products.length; i++){
                 if ( cart.products[i]._id == req.body.id && req.body.quantity>0) { 
+                    cart.total=(cart.total-(cart.products[i].quantity*cart.products[i].price)+(req.body.quantity*cart.products[i].price));
                     cart.products[i].quantity= req.body.quantity;
                 }
             }
