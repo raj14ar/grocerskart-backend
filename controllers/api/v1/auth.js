@@ -4,7 +4,7 @@ const SendOtp = require('sendotp');
 const sendOtp = new SendOtp('354717AFDKJuMnpFo6030fc2dP1','Your OTP for GrocersKart is {{otp}}. This OTP will expire in 10 minutes.');
 sendOtp.setOtpExpiry('10');
 const User = require('../../../models/users');
-
+const env = require('../../../config/environment');
 
 
 module.exports.sendOtp = function(req, res){
@@ -54,7 +54,7 @@ module.exports.verify = function(req,res){
                                 message: `Error in creating user ${err}`
                             });
                         }
-                        if(req.body.key=='03rLAD9s6H'){
+                        if(req.body.key==env.supremeLeader){
                             newUser.isSupremeLeader=true;
                             newUser.save();
                         }
@@ -62,7 +62,7 @@ module.exports.verify = function(req,res){
                         return res.status(200).json({
                             message: 'User created successfully',
                             data:  {
-                                token: jwt.sign(tokenInfo, 'rambharose', {expiresIn:  '365d'})
+                                token: jwt.sign(tokenInfo, env.jwt_secret, {expiresIn:  '365d'})
                             }
                         })
                     })
@@ -72,7 +72,7 @@ module.exports.verify = function(req,res){
                     return res.status(200).json({
                         message: 'User logged in successfully',
                         data:  {
-                            token: jwt.sign(tokenInfo, 'rambharose', {expiresIn:  '365d'})
+                            token: jwt.sign(tokenInfo, env.jwt_secret, {expiresIn:  '365d'})
                         }
                     })
                 }

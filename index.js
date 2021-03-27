@@ -1,4 +1,6 @@
 const express = require('express')
+const env = require('./config/environment');
+const logger = require('morgan');
 const app = express()
 const port = 8000
 const db = require('./config/mongoose');
@@ -13,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(logger(env.morgan.mode, env.morgan.options));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());

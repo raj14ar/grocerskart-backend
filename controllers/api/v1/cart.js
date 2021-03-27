@@ -15,7 +15,9 @@ module.exports.getCart = async function(req, res){
         if(cart){
             cart.products.forEach(element =>  {
                 element.price= element._id.price;
-                element._id=element._id._id
+                element.mrp= element._id.mrp;
+                element.discount= element._id.discount;
+                element._id=element._id._id;
             });
         }
         return res.status(200).json({
@@ -49,6 +51,8 @@ module.exports.createCart = async function(req, res){
                     price : product.price,
                     quantity : 1,
                     img: product.img,
+                    mrp: product.mrp,
+                    discount: product.discount
                 };
                 if(req.body.quantity && req.body.quantity>0){
                     item.quantity=req.body.quantity;
@@ -71,7 +75,9 @@ module.exports.createCart = async function(req, res){
                 _id : mongoose.Types.ObjectId(product.id),
                 price : product.price,
                 quantity : 1,
-                img: product.img
+                img: product.img,
+                mrp: product.mrp,
+                discount: product.discount
             };
             if(req.body.quantity){
                 item.quantity=req.body.quantity;

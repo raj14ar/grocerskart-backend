@@ -95,6 +95,8 @@ module.exports.removeProduct = async function(req, res){
 module.exports.updateProduct = async function(req, res){
     try{
         const product = await Product.findByIdAndUpdate(req.body.id,req.body);
+        product.discount= Math.floor(((product.mrp - product.price)*100)/product.mrp);
+        product.save();
         return res.status(200).json({
             message: 'Product updated Sucessfully'
         })

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/grocerskart_devlopment', {useNewUrlParser: true, useUnifiedTopology: true});
+const env = require('./environment');
+mongoose.connect(`mongodb://localhost/${env.db}`, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 const db = mongoose.connection;

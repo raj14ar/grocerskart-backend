@@ -77,7 +77,6 @@ module.exports.createOrder = async function(req, res){
             'name' : true
         }
         const orderDetails = await newOrder.populate('address',filterItem).populate('user',filterItem2).execPopulate();
-        console.log('Order details',orderDetails)
         newOrderMailer.newOrder(orderDetails)
         user.orders.push(newOrder);
         user.cart = undefined;
