@@ -3,7 +3,7 @@ const router = express.Router();
 const productApi = require('../../../controllers/api/v1/product')
 const passport = require('passport');
 router.get('/', productApi.getProducts);
-router.get('/details', productApi.getProductDetails);
+router.post('/details', productApi.getProductDetails);
 router.post('/',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'))
 router.post('/', passport.authenticate('jwt', {session: false}),productApi.createProducts);
 router.put('/',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'))
