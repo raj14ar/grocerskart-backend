@@ -30,7 +30,7 @@ module.exports.addAddress = async function(req, res){
             user.addresses.push(data);
             user.save();
             return res.status(200).json({
-                message: `Address added Sucessfully ${error.message}`
+                message: 'Address added Sucessfully'
             })
         }
         else{

@@ -80,7 +80,8 @@ module.exports.createProducts = async function(req, res){
 }
 module.exports.removeProduct = async function(req, res){
     try{
-        const product = await Product.findOneAndDelete(req.body.id);
+        const product = await Product.findById(req.body.id);
+        product.remove();
         return res.status(200).json({
             message: 'Product Sucessfully deleted'
         })

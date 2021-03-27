@@ -10,8 +10,7 @@ module.exports.getCart = async function(req, res){
             'updatedAt': false,
             'user': false
         }
-
-        const cart = await Cart.findOne({user: req.user.id},filterItem).populate('products._id');
+        const cart = await Cart.findOne({user: req.user._id},filterItem).populate('products._id');
         if(cart){
             cart.products.forEach(element =>  {
                 element.price= element._id.price;
