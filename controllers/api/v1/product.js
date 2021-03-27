@@ -20,7 +20,7 @@ module.exports.getProducts = async function(req, res){
     catch(error){
         console.log('Error in fetching product',error);
         return res.status(500).json({
-        message: 'Error in fetching product'
+        message: `Error in fetching product ${error.message}`
         });
     }
 }
@@ -39,7 +39,7 @@ module.exports.getProductDetails = async function(req, res){
     catch(error){
         console.log('Error in fetching product',error);
         return res.status(500).json({
-        message: 'Error in fetching product'
+        message: `Error in fetching product ${error.message}`
         });
     }
 }
@@ -74,7 +74,7 @@ module.exports.createProducts = async function(req, res){
     catch(error){
         console.log('Error in adding product',error);
         return res.status(500).json({
-        message: 'Error in adding product'
+        message: `Error in adding product ${error.message}`
         });
     }
 }
@@ -88,7 +88,7 @@ module.exports.removeProduct = async function(req, res){
     catch(error){
         console.log('Error in fetching product',error);
         return res.status(500).json({
-        message: 'Error in fetching product'
+        message: `Error in fetching product ${error.message}`
         });
     }
 }
@@ -104,7 +104,7 @@ module.exports.updateProduct = async function(req, res){
     catch(error){
         console.log('Error in updating product',error);
         return res.status(500).json({
-        message: 'Error in updating product'
+        message: `Error in updating product ${error.message}`
         });
     }
 }

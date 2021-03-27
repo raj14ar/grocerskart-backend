@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
 const SendOtp = require('sendotp');
-const sendOtp = new SendOtp('354717AFDKJuMnpFo6030fc2dP1','Your OTP for GrocersKart is {{otp}}. This OTP will expire in 10 minutes.');
+const sendOtp = new SendOtp('354717AFDKJuMnpFo6030fc2dP1','Your OTP for Youtimo is {{otp}}. This OTP will expire in 10 minutes.');
 sendOtp.setOtpExpiry('10');
 const User = require('../../../models/users');
 const env = require('../../../config/environment');

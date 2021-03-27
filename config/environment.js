@@ -15,7 +15,7 @@ const accessLogStream = rfs.createStream('access.log', {
 
 const development = {
     name: 'development',
-    db: 'youtimo_devlopment',
+    db: 'grocerskart_devlopment',
     smtp: {
         service: 'gmail',
         host: 'smtp.gmail.com',
@@ -29,7 +29,7 @@ const development = {
     jwt_secret: 'MkmBY69ulSZXsgEGtlj8IWdSp7Qjvtkg',
     supremeLeader:'03rLAD9s6H',
     morgan: {
-        mode: 'dev',
+        mode: 'combined',
         options: {stream: accessLogStream}
     }
 }
@@ -56,4 +56,5 @@ const production =  {
     }
 }
 
-module.exports = eval(process.env.YOUTIMO_ENVIRONMENT) == undefined ? development : eval(process.env.YOUTIMO_ENVIRONMENT);
+module.exports = development;
+// module.exports = eval(process.env.YOUTIMO_ENVIRONMENT) == undefined ? development : eval(process.env.YOUTIMO_ENVIRONMENT);

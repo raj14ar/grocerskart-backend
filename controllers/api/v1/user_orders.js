@@ -19,9 +19,9 @@ module.exports.getAllUserOrder = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching cart',error);
+        console.log('Error in fetching order',error);
         return res.status(500).json({
-        message: 'Error in fetching cart'
+        message: `Error in fetching order ${error.message}`
         });
     }
 }
@@ -42,9 +42,9 @@ module.exports.getOrderDeatils = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching cart',error);
+        console.log('Error in fetching order details',error);
         return res.status(500).json({
-        message: 'Error in fetching cart'
+        message: `Error in fetching order details ${error.message}`
         });
     }
 }
@@ -86,7 +86,7 @@ module.exports.createOrder = async function(req, res){
         }
         else{
             return res.status(409).json({
-                message: 'Add products in cart to order'
+                message: 'Add products in cart to place order'
             })
         }
         return res.status(200).json({
@@ -94,9 +94,9 @@ module.exports.createOrder = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in adding to cart',error);
+        console.log('Error in placing order',error);
         return res.status(500).json({
-        message: 'Error in adding to cart'
+        message: `Error in placing order ${error.message}`
         });
     }
 }

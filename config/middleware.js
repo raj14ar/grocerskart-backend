@@ -102,7 +102,7 @@ router.post('/',upload.array('image',5),function(req,res,next){
     next();
   } catch (error) {
     console.log(error)
-    return res.status(501).json({message: 'Error in uploading image'})
+    return res.status(501).json({message: `Error in uploading image ${error.message}`})
   }
 })
 

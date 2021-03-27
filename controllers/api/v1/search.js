@@ -15,7 +15,7 @@ module.exports.search = async function(req, res){
     catch(error){
         console.log('Error in fetching search result',error);
         return res.status(500).json({
-        message: 'Error in fetching search result'
+        message: `Error in fetching search result ${error.message}`
         });
     }
 }

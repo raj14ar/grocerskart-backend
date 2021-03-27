@@ -50,7 +50,7 @@ module.exports.updateUser = async function(req, res){
     catch(error){
         console.log('Error in updating user',error);
         return res.status(500).json({
-        message: 'Error in updating user'
+        message: `Error in updating user ${error.message}`
         });
     }
 }

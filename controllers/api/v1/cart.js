@@ -27,7 +27,7 @@ module.exports.getCart = async function(req, res){
     catch(error){
         console.log('Error in fetching cart',error);
         return res.status(500).json({
-        message: 'Error in fetching cart'
+        message: `Error in fetching cart ${error.message}`
         });
     }
 }
@@ -98,7 +98,7 @@ module.exports.createCart = async function(req, res){
     catch(error){
         console.log('Error in adding to cart',error);
         return res.status(500).json({
-        message: 'Error in adding to cart'
+        message: `Error in adding to cart ${error.message}`
         });
     }
 }
@@ -128,7 +128,7 @@ module.exports.removeCart = async function(req, res){
     catch(error){
         console.log('Error in deleting product from cart',error);
         return res.status(500).json({
-        message: 'Error in deleting product from cart'
+        message: `Error in deleting product from cart ${error.message}`
         });
     }
 }
@@ -156,7 +156,7 @@ module.exports.updateCart = async function(req, res){
     catch(error){
         console.log('Error in updating product from cart',error);
         return res.status(500).json({
-        message: 'Error in updating product from cart'
+        message: `Error in updating product from cart ${error.message}`
         });
     }
 }
