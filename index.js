@@ -21,7 +21,9 @@ app.use(passport.session());
 app.use(cors());
 
 // use express router
-
+app.set('view engine', 'ejs');
+app.set('views', './view');
+app.use(express.static('assets'));
 
 app.use('/', require('./routes'));
 
