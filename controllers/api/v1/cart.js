@@ -12,11 +12,15 @@ module.exports.getCart = async function(req, res){
         }
         const cart = await Cart.findOne({user: req.user._id},filterItem).populate('products._id');
         if(cart){
+            let total = 0;
+            let totalDiscount = 0;
             cart.products.forEach(element =>  {
                 element.price= element._id.price;
                 element.mrp= element._id.mrp;
                 element.discount= element._id.discount;
                 element._id=element._id._id;
+                total= total+ element.price;
+                totalDiscount= totalDiscount + ((element.mrp-element.price)*element.quantity);
             });
         }
         return res.status(200).json({
@@ -58,6 +62,7 @@ module.exports.createCart = async function(req, res){
                 }
                 let total = item.quantity*item.price;
                 cart.total = cart.total+total;
+                cart.totalDiscount = cart.totalDiscount+((product.mrp-product.price)*item.quantity);
                 cart.products.push(item);
                 cart.save();
             }
@@ -68,7 +73,7 @@ module.exports.createCart = async function(req, res){
             }
 
         }
-        else{
+        else if(product){
             let item = {
                 name : product.name,
                 _id : mongoose.Types.ObjectId(product.id),
@@ -82,13 +87,20 @@ module.exports.createCart = async function(req, res){
                 item.quantity=req.body.quantity;
             }
             let total = item.quantity*item.price;
+            let totalDiscount = (product.mrp-product.price)*item.quantity;
             const newCart = await Cart.create({
                 user: req.user.id,
                 products: item,
-                total: total
+                total: total,
+                totalDiscount: totalDiscount
             })
             user.cart = newCart;
             user.save();
+        }
+        else{
+            return res.status(409).json({
+                message: 'Product not found to add in cart'
+            })
         }
         return res.status(200).json({
             message: 'Product Sucessfully added to cart'
@@ -114,11 +126,17 @@ module.exports.removeCart = async function(req, res){
             for( let i = 0; i < cart.products.length; i++){
                 if ( cart.products[i]._id == req.body.id) { 
                     cart.total=(cart.total-(cart.products[i].price*cart.products[i].quantity));
+                    cart.totalDiscount=cart.totalDiscount-((cart.products[i].mrp-cart.products[i].price)*cart.products[i].quantity);
                     cart.products.splice(i, 1); 
                     i--; 
                 }
             }
-            cart.save();
+            if(cart.products.length==0){
+                cart.remove();
+            }
+            else{
+                cart.save();
+            }
         }
         return res.status(200).json({
             message: 'Product sucessfully deleted from cart'
@@ -143,6 +161,7 @@ module.exports.updateCart = async function(req, res){
             for( let i = 0; i < cart.products.length; i++){
                 if ( cart.products[i]._id == req.body.id && req.body.quantity>0) { 
                     cart.total=(cart.total-(cart.products[i].quantity*cart.products[i].price)+(req.body.quantity*cart.products[i].price));
+                    cart.totalDiscount=cart.totalDiscount+((cart.products[i].mrp-cart.products[i].price)*(req.body.quantity-cart.products[i].quantity));
                     cart.products[i].quantity= req.body.quantity;
                 }
             }
