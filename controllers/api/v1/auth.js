@@ -62,17 +62,23 @@ module.exports.verify = function(req,res){
                         return res.status(200).json({
                             message: 'User created successfully',
                             data:  {
-                                token: jwt.sign(tokenInfo, env.jwt_secret, {expiresIn:  '365d'})
+                                token: jwt.sign(tokenInfo, env.jwt_secret, {expiresIn:  '365d'}),
+                                isRegistered: false
                             }
                         })
                     })
                 }
                 else{
                     const tokenInfo = (({ id,referralCode }) => ({ id,referralCode }))(user);
+                    let isRegistered = false;
+                    if(user.name){
+                        isRegistered = true
+                    }
                     return res.status(200).json({
                         message: 'User logged in successfully',
                         data:  {
-                            token: jwt.sign(tokenInfo, env.jwt_secret, {expiresIn:  '365d'})
+                            token: jwt.sign(tokenInfo, env.jwt_secret, {expiresIn:  '365d'}),
+                            isRegistered: isRegistered
                         }
                     })
                 }
