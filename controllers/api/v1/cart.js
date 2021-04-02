@@ -22,6 +22,7 @@ module.exports.getCart = async function(req, res){
                 total= total+ element.price;
                 totalDiscount= totalDiscount + ((element.mrp-element.price)*element.quantity);
             });
+            cart.totalMrp = cart.total + cart.totalDiscount;
         }
         return res.status(200).json({
             data: cart
@@ -83,6 +84,7 @@ module.exports.createCart = async function(req, res){
                 let total = item.quantity*item.price;
                 cart.total = cart.total+total;
                 cart.totalDiscount = cart.totalDiscount+((product.mrp-product.price)*item.quantity);
+                cart.totalMrp = cart.total + cart.totalDiscount;
                 cart.products.push(item);
                 cart.save();
             }
@@ -108,11 +110,13 @@ module.exports.createCart = async function(req, res){
             }
             let total = item.quantity*item.price;
             let totalDiscount = (product.mrp-product.price)*item.quantity;
+            let totalMrp= total + totalDiscount;
             const newCart = await Cart.create({
                 user: req.user.id,
                 products: item,
                 total: total,
-                totalDiscount: totalDiscount
+                totalDiscount: totalDiscount,
+                totalMrp: totalMrp
             })
             user.cart = newCart;
             user.save();
@@ -147,6 +151,7 @@ module.exports.removeCart = async function(req, res){
                 if ( cart.products[i]._id == req.body.id) { 
                     cart.total=(cart.total-(cart.products[i].price*cart.products[i].quantity));
                     cart.totalDiscount=cart.totalDiscount-((cart.products[i].mrp-cart.products[i].price)*cart.products[i].quantity);
+                    cart.totalMrp = cart.total + cart.totalDiscount;
                     cart.products.splice(i, 1); 
                     i--; 
                 }
@@ -185,6 +190,7 @@ module.exports.updateCart = async function(req, res){
                     cart.products[i].quantity= req.body.quantity;
                 }
             }
+            cart.totalMrp = cart.total + cart.totalDiscount;
             cart.save();
         }
         return res.status(200).json({

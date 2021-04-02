@@ -28,6 +28,10 @@ const cartSchema = mongoose.Schema ({
         totalDiscount: {
             type: Number,
             default: 0
+        },
+        totalMrp: {
+            type: Number,
+            default: 0
         }
 },{
     timestamps: true,
