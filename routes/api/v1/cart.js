@@ -6,6 +6,7 @@ const passport = require('passport');
 
 router.get('/',passport.authenticate('jwt', {session: false}) ,cartApi.getCart);
 router.get('/quantity',passport.authenticate('jwt', {session: false}) ,cartApi.getCartQuantity);
+router.get('/price-details',passport.authenticate('jwt', {session: false}) ,cartApi.getCartPriceDetails);
 router.post('/',passport.authenticate('jwt', {session: false}), cartApi.createCart);
 router.put('/',passport.authenticate('jwt', {session: false}), cartApi.updateCart);
 router.delete('/',passport.authenticate('jwt', {session: false}), cartApi.removeCart);

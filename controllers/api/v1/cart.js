@@ -55,6 +55,32 @@ module.exports.getCartQuantity = async function(req, res){
         });
     }
 }
+module.exports.getCartPriceDetails = async function(req, res){
+    try{
+        const cart = await Cart.findOne({user: req.user._id});
+        let totalPrice = 0;
+        let totalDiscount = 0;
+        let totalMrp = 0;
+        if(cart){
+            totalPrice= cart.total;
+            totalDiscount= cart.totalDiscount;
+            totalMrp = cart.totalMrp;
+        }
+        return res.status(200).json({
+            data: {
+                totalPrice: totalPrice,
+                totalDiscount: totalDiscount,
+                totalMrp: totalMrp
+            }
+        })
+    }
+    catch(error){
+        console.log('Error in fetching price details',error);
+        return res.status(500).json({
+        message: `Error in fetching price details ${error.message}`
+        });
+    }
+}
 
 module.exports.createCart = async function(req, res){
     try{

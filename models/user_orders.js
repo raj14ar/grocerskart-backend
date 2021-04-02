@@ -25,6 +25,7 @@ const userOrdersSchema = new mongoose.Schema({
         _id: mongoose.Types.ObjectId,
         quantity: Number,
         price: Number,
+        mrp: Number,
         img: [
             {
                 type: String

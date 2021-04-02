@@ -53,10 +53,6 @@ module.exports.createOrder = async function(req, res){
         const cart = await Cart.findOne({user:req.user.id}).populate('products');
         const user = await User.findById(req.user.id)
         if(cart){
-            let totalPrice = 0;
-        cart.products.forEach(element => {
-            totalPrice=totalPrice+element.price*element.quantity;
-        });
         let orderId = Date.now();
         orderId='ODR'+Math.floor( orderId / 1000 );
         
@@ -64,7 +60,7 @@ module.exports.createOrder = async function(req, res){
             user: req.user.id,
             products: cart.products,
             address: mongoose.Types.ObjectId(req.body.address),
-            total: totalPrice,
+            total: cart.total,
             paymentMethod: 'Cash on Delivery',
             orderId: orderId
         });
