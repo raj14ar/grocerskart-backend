@@ -6,10 +6,19 @@ module.exports.getTopDeals = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false
+            'updatedAt': false,
+            'tag': false
         }
-        const products = await Top_Deals.find({},filterItem).populate('product',filterItem).exec();
-        const maxDiscount = Math.max(...products.map(items => items.product.discount), 0);
+        const filterItem2 = {
+            'createdAt': false,
+            'updatedAt': false,
+            '_id': false
+        }
+        const products = await Top_Deals.find({},filterItem2).populate('product',filterItem).exec();
+        let maxDiscount=0;
+        if(products){
+            maxDiscount = Math.max(...products.map(items => items.product?items.product.discount:0), 0);
+        }
         return res.status(200).json({
             data: products,
             maxDiscount: maxDiscount
@@ -47,7 +56,7 @@ module.exports.createTopDeals = async function(req, res){
 }
 module.exports.removeTopDeals = async function(req, res){
     try{
-        const data = await Top_Deals.findByIdAndDelete(req.body.id);
+        const data = await Top_Deals.findOneAndDelete({product: req.body.id});
         return res.status(200).json({
             message: 'Product deleted Sucessfully to deals'
         })

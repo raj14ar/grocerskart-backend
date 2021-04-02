@@ -1,13 +1,12 @@
 const Product = require("../../../models/products");
-const escapeStringRegexp = require("escape-string-regexp");
 module.exports.search = async function(req, res){
     try{
         const filterItem = {
             'createdAt': false,
             'updatedAt': false
         }
-        let $regex = escapeStringRegexp(req.body.search_term);
-        const result = await Product.find({ tag : { $regex , $options: 'i'}},filterItem).populate().exec();
+        let searchTerms = req.body.search_term.replace(/ /g, "|");
+        const result = await Product.find({ tag: {$regex:  searchTerms , $options: 'i'}},filterItem).populate();
         return res.status(200).json({
             data: result
         })

@@ -34,6 +34,26 @@ module.exports.getCart = async function(req, res){
         });
     }
 }
+module.exports.getCartQuantity = async function(req, res){
+    try{
+        const cart = await Cart.findOne({user: req.user._id});
+        let totalQuantity = 0;
+        if(cart){
+            cart.products.forEach(element =>  {
+                totalQuantity=totalQuantity+element.quantity;
+            });
+        }
+        return res.status(200).json({
+            data: {totalQuantity: totalQuantity}
+        })
+    }
+    catch(error){
+        console.log('Error in fetching cart quantity',error);
+        return res.status(500).json({
+        message: `Error in fetching cart quantity ${error.message}`
+        });
+    }
+}
 
 module.exports.createCart = async function(req, res){
     try{

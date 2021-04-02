@@ -26,7 +26,9 @@ module.exports.getProducts = async function(req, res){
 
         const filterItem = {
             'createdAt': false,
-            'updatedAt': false
+            'updatedAt': false,
+            'tag': false,
+            '__v': false
         }
         const products = await Category.findById(req.body.id,filterItem).populate('products',filterItem).exec();
         return res.status(200).json({

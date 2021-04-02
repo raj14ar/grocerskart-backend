@@ -9,7 +9,10 @@ module.exports.getUser = async function(req, res){
         const filterItem = {
             'createdAt': false,
             'updatedAt': false,
-            'isSupremeLeader': false
+            'isSupremeLeader': false,
+            'addresses': false,
+            'orders': false,
+            'cart': false
 
         }
         const user = await User.findById(req.user.id,filterItem);
