@@ -19,10 +19,13 @@ module.exports.getCart = async function(req, res){
                 element.mrp= element._id.mrp;
                 element.discount= element._id.discount;
                 element._id=element._id._id;
-                total= total+ element.price;
+                total= total+ element.price*element.quantity;
                 totalDiscount= totalDiscount + ((element.mrp-element.price)*element.quantity);
             });
+            cart.total = total;
+            cart.totalDiscount = totalDiscount;
             cart.totalMrp = cart.total + cart.totalDiscount;
+            cart.save();
         }
         return res.status(200).json({
             data: cart
@@ -92,6 +95,7 @@ module.exports.createCart = async function(req, res){
             cart.products.forEach(element => {
             if(element._id==req.body.id){
                 alreadyAvailable=true;
+                element.quantity=element.quantity+1;
                 }
             });
             if(!alreadyAvailable && product){
@@ -115,7 +119,8 @@ module.exports.createCart = async function(req, res){
                 cart.save();
             }
             else{
-                return res.status(409).json({
+                cart.save();
+                return res.status(200).json({
                     message: 'Product already exists in cart'
                 })
             }
