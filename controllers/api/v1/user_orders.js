@@ -19,7 +19,6 @@ module.exports.getAllUserOrder = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching order',error);
         return res.status(500).json({
         message: `Error in fetching order ${error.message}`
         });
@@ -42,7 +41,6 @@ module.exports.getOrderDeatils = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching order details',error);
         return res.status(500).json({
         message: `Error in fetching order details ${error.message}`
         });
@@ -90,7 +88,6 @@ module.exports.createOrder = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in placing order',error);
         return res.status(500).json({
         message: `Error in placing order ${error.message}`
         });
@@ -108,7 +105,6 @@ module.exports.getOrderStatus = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching order status',error);
         return res.status(500).json({
         message: `Error in fetching order status ${error.message}`
         });

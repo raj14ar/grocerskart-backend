@@ -15,7 +15,6 @@ module.exports.getCategory = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching categories',error);
         return res.status(500).json({
         message: `Error in fetching categories ${error.message}`
         });
@@ -36,7 +35,6 @@ module.exports.getProducts = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching categories',error);
         return res.status(500).json({
         message: `Error in fetching categories ${error.message}`
         });
@@ -52,7 +50,6 @@ module.exports.createCategory = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in creating category',error);
         return res.status(500).json({
         message: `Error in creating category ${error.message}`
         });
@@ -66,7 +63,6 @@ module.exports.removeCategory = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in deleting category',error);
         return res.status(500).json({
         message: `Error in deleting category ${error.message}`
         });

@@ -16,7 +16,6 @@ module.exports.getWishlist = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching wishlist',error);
         return res.status(500).json({
         message: `Error in fetching wishlist ${error.message}`
         });
@@ -51,7 +50,6 @@ module.exports.createWishlist = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in adding to wishlist',error);
         return res.status(500).json({
         message: `Error in adding to wishlist ${error.message}`
         });
@@ -73,7 +71,6 @@ module.exports.removeWishlist = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in deleting product from wishlist',error);
         return res.status(500).json({
         message: `Error in deleting product from wishlist ${error.message}`
         });

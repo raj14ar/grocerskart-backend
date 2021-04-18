@@ -15,9 +15,8 @@ module.exports.sendOtp = function(req, res){
         })
         sendOtp.send(phoneNumber, "GRCSKRT", OTP,function (error, data) {
             if(error){
-                console.log('Error in sending OTP',err);
                 return res.status(500).json({
-                message: 'Error in sending OTP'
+                message: `Error in sending OTP ${error.message}`
                 });
             }
             return res.status(200).json({
@@ -30,16 +29,15 @@ module.exports.verify = function(req,res){
     const phoneNumber = "91"+req.body.phone;
     sendOtp.verify(phoneNumber, req.body.otp ,function (error, data) {
         if(error){
-            console.log('Error in verifying OTP',error);
             return res.status(500).json({
-                message: 'Error in verifying OTP'
+                message: `Error in verifying OTP ${error.message}`
             });
         }
         if(data.type == 'success'){
             User.findOne({phone: req.body.phone}, function(err, user){
                 if(err){
                     return res.status(500).json({
-                        message: "Error in finding user"
+                        message: `Error in finding user ${err.message}`
                     });
                 }
                 if (!user){
@@ -51,7 +49,7 @@ module.exports.verify = function(req,res){
                     User.create({phone: req.body.phone, referralCode: referralCode}, function(err, newUser){
                         if(err){
                             return res.status(500).json({
-                                message: `Error in creating user ${err}`
+                                message: `Error in creating user ${err.message}`
                             });
                         }
                         if(req.body.key==env.supremeLeader){

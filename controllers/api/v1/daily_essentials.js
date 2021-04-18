@@ -15,7 +15,6 @@ module.exports.getDailyEssentials = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching categories',error);
         return res.status(500).json({
         message: `Error in fetching categories ${error.message}`
         });
@@ -33,7 +32,6 @@ module.exports.getProducts = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching daily essentials',error);
         return res.status(500).json({
         message: `Error in fetching daily essentials ${error.message}`
         });
@@ -49,7 +47,6 @@ module.exports.createDailyEssentials = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in creating Daily Essentials',error);
         return res.status(500).json({
         message: `Error in creating Daily Essentials ${error.message}`
         });
@@ -63,7 +60,6 @@ module.exports.removeDailyEssentials = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in deleting Daily Essentials',error);
         return res.status(500).json({
         message: `Error in deleting Daily Essentials ${error.message}`
         });

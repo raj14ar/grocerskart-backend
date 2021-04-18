@@ -14,7 +14,7 @@ module.exports.getAddresses = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching addresses',error);
+        
         return res.status(500).json({
         message: `Error in fetching addresses ${error.message}`
         });
@@ -40,7 +40,7 @@ module.exports.addAddress = async function(req, res){
         }
     }
     catch(error){
-        console.log('Error in adding address',error);
+        
         return res.status(500).json({
         message: `Error in adding address ${error.message}`
         });
@@ -69,7 +69,7 @@ module.exports.destroyAddress = async function(req, res){
         }
     }
     catch(error){
-        console.log('Error in removing address',error);
+        
         return res.status(500).json({
         message: `Error in removing address ${error.message}`
         });
@@ -84,7 +84,6 @@ module.exports.updateAddress = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in updating address',error);
         return res.status(500).json({
         message: `Error in updating address ${error.message}`
         });

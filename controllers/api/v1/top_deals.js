@@ -25,7 +25,6 @@ module.exports.getTopDeals = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching top deals',error);
         return res.status(500).json({
         message: `Error in fetching top deals ${error.message}`
         });
@@ -48,7 +47,6 @@ module.exports.createTopDeals = async function(req, res){
         }
     }
     catch(error){
-        console.log('Error in adding to top deals',error);
         return res.status(500).json({
         message: `Error in adding to top deals ${error.message}`
         });
@@ -62,7 +60,6 @@ module.exports.removeTopDeals = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in deleting to top deals',error);
         return res.status(500).json({
         message: `Error in deleting to top deals ${error.message}`
         });

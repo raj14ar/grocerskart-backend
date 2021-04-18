@@ -13,7 +13,6 @@ module.exports.getSlider = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in fetching slider',error);
         return res.status(500).json({
         message: `Error in fetching slider ${error.message}`
         });
@@ -29,7 +28,6 @@ module.exports.createSlider = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in creating slider',error);
         return res.status(500).json({
         message: `Error in creating slider ${error.message}`
         });
@@ -44,7 +42,6 @@ module.exports.removeSlider = async function(req, res){
         })
     }
     catch(error){
-        console.log('Error in deleting slider',error);
         return res.status(500).json({
         message: `Error in deleting slider ${error.message}`
         });
