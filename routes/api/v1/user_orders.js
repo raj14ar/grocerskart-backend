@@ -9,6 +9,9 @@ router.get('/',passport.authenticate('jwt', {session: false}) ,userOrdersApi.get
 router.post('/',passport.authenticate('jwt', {session: false}), userOrdersApi.createOrder);
 router.post('/',passport.authenticate('jwt', {session: false}), mailer.newOrder);
 router.post('/details',passport.authenticate('jwt', {session: false}), userOrdersApi.getOrderDeatils);
+router.post('/status',passport.authenticate('jwt', {session: false}), userOrdersApi.getOrderStatus);
+router.put('/',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'))
+router.put('/', passport.authenticate('jwt', {session: false}),userOrdersApi.updateOrderStatus);
 router.use('*', function(req, res){
     res.status(404).json({
         message: 'Page Not Found'

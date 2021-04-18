@@ -28,7 +28,9 @@ app.use(express.static('assets'));
 app.use('/', require('./routes'));
 
 app.use('*', function(req, res){
-  res.status(404).send('Page Not Found');
+  res.status(404).json({
+      message: `Page Not Found ${req.get('host')}${req.originalUrl}`
+  });
 });
 
 app.listen(port, () => {

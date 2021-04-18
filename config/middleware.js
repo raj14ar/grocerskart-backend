@@ -81,7 +81,7 @@ const upload = multer({
   },
   storage: multerS3({
     s3: s3,
-    bucket: 'grocerskart',
+    bucket: 'youtimo',
     acl: 'public-read',
     key: function (req, file, cb) {
       let name = file.originalname.replace(/\s/g,'_');

@@ -56,6 +56,6 @@ const production =  {
     }
 }
 
-//module.exports = development;
-module.exports = production;
+module.exports = development;
+//module.exports = production;
 // module.exports = eval(process.env.YOUTIMO_ENVIRONMENT) == undefined ? development : eval(process.env.YOUTIMO_ENVIRONMENT);

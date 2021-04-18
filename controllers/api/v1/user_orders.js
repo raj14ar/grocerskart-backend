@@ -96,3 +96,35 @@ module.exports.createOrder = async function(req, res){
         });
     }
 }
+module.exports.getOrderStatus = async function(req, res){
+    try{
+        const filterItem = {
+            'status': true,
+            '_id': false
+        }
+        const order = await Orders.findById(req.body.id,filterItem);
+        return res.status(200).json({
+            data: order
+        })
+    }
+    catch(error){
+        console.log('Error in fetching order status',error);
+        return res.status(500).json({
+        message: `Error in fetching order status ${error.message}`
+        });
+    }
+}
+module.exports.updateOrderStatus = async function(req, res){
+    try{
+        const order = await Orders.findByIdAndUpdate(req.body.id,{status:req.body.status});
+        order.save();
+        return res.status(200).json({
+            message: 'Order Status updated Sucessfully'
+        })
+    }
+    catch(error){
+        return res.status(500).json({
+        message: `Error in updating order status ${error.message}`
+        });
+    }
+}
