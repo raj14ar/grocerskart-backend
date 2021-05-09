@@ -17,9 +17,7 @@ router.post('/',function(req, res, next){
       next();
     }
     else{
-      return res.status(401).json({
-          message: 'Unauthorized'
-      })
+      return res.status(401).send("Unauthorized");
     }
   })
 })
@@ -34,9 +32,7 @@ router.put('/',function(req, res, next){
       next();
     }
     else{
-      return res.status(401).json({
-          message: 'Unauthorized'
-      })
+      return res.status(401).send("Unauthorized");
     }
   })
 })
@@ -52,9 +48,7 @@ router.delete('/',function(req, res, next){
       next();
     }
     else{
-      return res.status(401).json({
-          message: 'Unauthorized'
-      })
+      return res.status(401).send("Unauthorized");
     }
   })
 })

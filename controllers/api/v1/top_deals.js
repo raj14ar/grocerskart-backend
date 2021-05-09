@@ -20,8 +20,10 @@ module.exports.getTopDeals = async function(req, res){
             maxDiscount = Math.max(...products.map(items => items.product?items.product.discount:0), 0);
         }
         return res.status(200).json({
-            data: products,
-            maxDiscount: maxDiscount
+            data: {
+                products,
+                maxDiscount: maxDiscount
+            }
         })
     }
     catch(error){

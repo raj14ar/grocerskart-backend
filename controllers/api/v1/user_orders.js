@@ -1,4 +1,3 @@
-const userOrders = require('../../../models/user_orders');
 const User = require('../../../models/users');
 const Cart = require('../../../models/cart');
 const mongoose = require('mongoose');
@@ -11,9 +10,11 @@ module.exports.getAllUserOrder = async function(req, res){
             '_id': true,
             'products': true,
             'orderId' : true,
-            'total' : true
+            'total' : true,
+            'status': true
         }
         const user = await User.findById(req.user.id).populate('orders',filterItem);
+        console.log(req.user.id);
         return res.status(200).json({
             data: user.orders
         })
@@ -31,11 +32,30 @@ module.exports.getOrderDeatils = async function(req, res){
             'updatedAt': false,
             'user' : false
         }
-        const filterItem2 = {
+        const order = await Orders.find({user:req.user.id}).where('_id').equals(req.body.id).populate('address',filterItem);
+        return res.status(200).json({
+            data: order[0]
+        })
+    }
+    catch(error){
+        return res.status(500).json({
+        message: `Error in fetching order details ${error.message}`
+        });
+    }
+}
+module.exports.getOrderDeatilsAdmin = async function(req, res){
+    try{
+        const filterItem = {
+            'createdAt': false,
             'updatedAt': false,
-            'user' : false
+            "isSupremeLeader": false,
+            "addresses": false,
+            "orders": false,
+            "referred": false,
+            "cart": false,
+            "referralCode": false
         }
-        const order = await Orders.findById(req.body.id,filterItem2).populate('address',filterItem);
+        const order = await Orders.findOne({orderId:req.body.order_id}).populate('address user',filterItem);
         return res.status(200).json({
             data: order
         })
@@ -60,7 +80,8 @@ module.exports.createOrder = async function(req, res){
             address: mongoose.Types.ObjectId(req.body.address),
             total: cart.total,
             paymentMethod: 'Cash on Delivery',
-            orderId: orderId
+            orderId: orderId,
+            status: "Placed"
         });
         const filterItem = {
             'createdAt': false,

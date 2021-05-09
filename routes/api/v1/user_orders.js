@@ -12,6 +12,8 @@ router.post('/details',passport.authenticate('jwt', {session: false}), userOrder
 router.post('/status',passport.authenticate('jwt', {session: false}), userOrdersApi.getOrderStatus);
 router.put('/',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'))
 router.put('/', passport.authenticate('jwt', {session: false}),userOrdersApi.updateOrderStatus);
+router.post('/detailsByOrderId',passport.authenticate('jwt', {session: false}), require('../../../config/middleware'));
+router.post('/detailsByOrderId',passport.authenticate('jwt', {session: false}), userOrdersApi.getOrderDeatilsAdmin);
 router.use('*', function(req, res){
     res.status(404).json({
         message: 'Page Not Found'
