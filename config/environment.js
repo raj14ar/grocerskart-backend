@@ -22,12 +22,12 @@ const development = {
         port: 587,
         secure: false,
         auth: {
-            user: 'youtimoindia',
-            pass: 'Jaimahakal@2021'
+            user: process.env.YOUTIMO_EMAIL_USERNAME,
+            pass: process.env.YOUTIMO_EMAIL_PASSWORD
         }
     },
-    jwt_secret: 'MkmBY69ulSZXsgEGtlj8IWdSp7Qjvtkg',
-    supremeLeader:'03rLAD9s6H',
+    jwt_secret: process.env.YOUTIMO_JWT_SECRET,
+    supremeLeader: process.env.YOUTIMO_SUPREME_LEADER,
     morgan: {
         mode: 'combined',
         options: {stream: accessLogStream}
@@ -56,6 +56,6 @@ const production =  {
     }
 }
 
-module.exports = development;
+// module.exports = development;
 //module.exports = production;
-// module.exports = eval(process.env.YOUTIMO_ENVIRONMENT) == undefined ? development : eval(process.env.YOUTIMO_ENVIRONMENT);
+module.exports = eval(process.env.YOUTIMO_ENVIRONMENT) == undefined ? development : eval(process.env.YOUTIMO_ENVIRONMENT);
