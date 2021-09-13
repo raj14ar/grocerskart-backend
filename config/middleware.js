@@ -56,8 +56,8 @@ router.delete('/',function(req, res, next){
 
 
 const s3 = new aws.S3({
-  accessKeyId: 'AKIAQIZF5O6IRJ5DY3UL',
-  secretAccessKey: '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'
+  accessKeyId: 'process.env.YOUTIMO_AWS_ACCESS_KEY_ID',
+  secretAccessKey: 'process.env.YOUTIMO_AWS_SECRET_ACCESS_KEY'
 });
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
